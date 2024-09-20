@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>docx-modify-app</title>
+  </head>
+  <body>
+    <form class="form">
+      <!-- Инф-я о договоре -->
+      <div class="form__conteiner">
+        <h2 class="form__conteiner-subtitle">Договор</h2>
+        <input
+          type="number"
+          id="contract_number"
+          placeholder="Номер договора"
+          class="form__conteiner-input"
+        />
+        <label for="">Дата составления</label>
+        <input
+          type="date"
+          id="contract_date"
+          placeholder="Дата составления"
+          class="form__conteiner-input"
+        />
+      </div>
+
+      <!-- Инф-я о родителе -->
+      <div class="form__conteiner">
+        <h2 class="form__conteiner-subtitle">Родитель</h2>
+        <input
+          type="text"
+          id="parent_name"
+          placeholder="ФИО"
+          class="form__conteiner-input"
+        />
+        <input
+          type="number"
+          id="parent_phone"
+          placeholder="Номер телефона"
+          class="form__conteiner-input"
+        />
+        <input
+          type="text"
+          id="parent_email"
+          placeholder="Эл.почта"
+          class="form__conteiner-input"
+        />
+        <input
+          type="text"
+          id="registration_address"
+          placeholder="Адрес регистрации"
+          class="form__conteiner-input"
+        />
+      </div>
+
+      <!-- Паспорт родителя -->
+      <h2 class="form__conteiner-subtitle">Паспорт</h2>
+      <div class="form__conteiner">
+        <input
+          type="number"
+          id="passport_series"
+          placeholder="Серия"
+          class="form__conteiner-input"
+        />
+        <input
+          type="number"
+          id="passport_number"
+          placeholder="Номер"
+          class="form__conteiner-input"
+        />
+        <label for="">Дата выдачи</label>
+        <input
+          type="date"
+          id="passport_issue_date"
+          placeholder="Дата выдачи"
+          class="form__conteiner-input"
+        />
+        <input
+          type="text"
+          id="passport_place_of_issue"
+          placeholder="Место выдачи"
+          class="form__conteiner-input"
+        />
+      </div>
+
+      <!-- Инф-я о ребёнке -->
+      <h2 class="form__conteiner-subtitle">Ученик</h2>
+      <div class="form__conteiner">
+        <input
+          type="text"
+          id="children_name"
+          placeholder="ФИО"
+          class="form__conteiner-input"
+        />
+      </div>
+
+      <!-- Инф-я о продукте -->
+      <div class="form__conteiner">
+        <h2 class="form__conteiner-subtitle">Продукт</h2>
+        <input
+          type="text"
+          id="subject_name"
+          placeholder="Предмет"
+          class="form__conteiner-input"
+        />
+        <input
+          type="text"
+          id="rate_name"
+          placeholder="Тариф"
+          class="form__conteiner-input"
+        />
+        <input
+          type="text"
+          id="course_name"
+          placeholder="Название курса"
+          class="form__conteiner-input"
+        />
+        <label for="">Дата начала</label>
+        <input
+          type="date"
+          id="course_start_date"
+          placeholder="Начало"
+          class="form__conteiner-input"
+        />
+        <input
+          type="number"
+          id="course_duration"
+          placeholder="Продолжительность"
+          class="form__conteiner-input"
+        />
+        <input
+          type="number"
+          id="course_price"
+          placeholder="Цена"
+          class="form__conteiner-input"
+        />
+      </div>
+      <br />
+      <button class="form__button">Создать</button>
+    </form>
+    <script src="./script.js"></script>
+  </body>
+</html>
