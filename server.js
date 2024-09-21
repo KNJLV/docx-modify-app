@@ -9,6 +9,15 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Настройка заголовка CSP
+app.use((req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'self'; img-src data:; script-src 'self'"
+  );
+  next();
+});
+
 app.use(express.static(__dirname));
 
 app.get("/", (req, res) => {
