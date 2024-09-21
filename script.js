@@ -23,7 +23,7 @@ keys = [
 
 formButton.addEventListener("click", function (e) {
   e.preventDefault();
-  const inputs = document.querySelectorAll(".form__conteiner-input");
+  let inputs = document.querySelectorAll(".form__conteiner-input");
 
   for (let i = 0; i < inputs.length; i++) {
     values.push(inputs[i].value);
@@ -79,4 +79,11 @@ formButton.addEventListener("click", function (e) {
     .catch((error) => {
       console.error("Ошибка:", error);
     });
+
+  values = [];
+  inputs = document.querySelectorAll(".form__conteiner-input");
+
+  for (let i = 0; i < inputs.length; i++) {
+    inputs[i].value = "";
+  }
 });
