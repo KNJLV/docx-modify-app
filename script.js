@@ -23,6 +23,7 @@ keys = [
 
 formButton.addEventListener("click", function (e) {
   e.preventDefault();
+  values = []; // Очищаем массив перед каждым запросом
   const inputs = document.querySelectorAll(".form__conteiner-input");
 
   for (let i = 0; i < inputs.length; i++) {
@@ -49,11 +50,13 @@ formButton.addEventListener("click", function (e) {
   values[14] = change_date3;
 
   const dict_values = keys.reduce((acc, key, index) => {
-    acc[key] = values[index]; // Присваиваем значение из массива values по индексу
-    return acc; // Возвращаем аккумулятор для следующей итерации
+    acc[key] = values[index];
+    return acc;
   }, {});
 
   const jsonData = JSON.stringify(dict_values);
+
+  // Отправляем данные на сервер
   fetch("/api/send-data", {
     method: "POST",
     headers: {
