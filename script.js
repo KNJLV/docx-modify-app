@@ -29,8 +29,8 @@ formButton.addEventListener("click", function (e) {
     values.push(inputs[i].value);
   }
 
-  const initials = inputs[2].value.split(" ");
-  const parent_initials =
+  let initials = inputs[2].value.split(" ");
+  let parent_initials =
     initials[1][0] + "." + initials[2][0] + "." + initials[0];
   values.push(parent_initials);
 
@@ -48,12 +48,12 @@ formButton.addEventListener("click", function (e) {
     change_date3[2] + "." + change_date3[1] + "." + change_date3[0];
   values[14] = change_date3;
 
-  const dict_values = keys.reduce((acc, key, index) => {
+  let dict_values = keys.reduce((acc, key, index) => {
     acc[key] = values[index]; // Присваиваем значение из массива values по индексу
     return acc; // Возвращаем аккумулятор для следующей итерации
   }, {});
 
-  const jsonData = JSON.stringify(dict_values);
+  let jsonData = JSON.stringify(dict_values);
   fetch("/api/send-data", {
     method: "POST",
     headers: {
@@ -68,8 +68,8 @@ formButton.addEventListener("click", function (e) {
       return response.blob(); // Получаем blob из ответа
     })
     .then((blob) => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
+      let url = window.URL.createObjectURL(blob);
+      let a = document.createElement("a");
       a.href = url;
       a.download = "modified_contract.docx"; // Имя файла при скачивании
       document.body.appendChild(a);
@@ -81,6 +81,7 @@ formButton.addEventListener("click", function (e) {
     });
 
   values = [];
+  dict_values = {};
   for (let i = 0; i < inputs.length; i++) {
     inputs[i].value = "";
   }
