@@ -48,7 +48,7 @@ formButton.addEventListener("click", function (e) {
   const jsonData = JSON.stringify(dict_values);
 
   // Отправляем данные на сервер
-  fetch("https://tools.navyk.school/api/send-data", {
+  fetch("/api/send-data", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
