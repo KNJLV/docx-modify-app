@@ -81,8 +81,6 @@ formButton.addEventListener("click", function (e) {
     });
 
   values = [];
-  inputs = document.querySelectorAll(".form__conteiner-input");
-
   for (let i = 0; i < inputs.length; i++) {
     inputs[i].value = "";
   }
