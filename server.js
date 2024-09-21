@@ -11,17 +11,19 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname));
 
+// Главная страница
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
+// Обработка данных формы
 app.post("/api/send-data", (req, res) => {
   const data = req.body;
   console.log("Полученные данные:", data);
 
   const templatePath = path.resolve(__dirname, "Contract.docx");
 
-  // Проверяем наличие файла-шаблона
+  // Проверка наличия шаблона
   if (!fs.existsSync(templatePath)) {
     console.error("Файл шаблона не найден:", templatePath);
     return res.status(404).send("Шаблон контракта не найден.");
@@ -44,7 +46,7 @@ app.post("/api/send-data", (req, res) => {
     return res.status(500).send("Ошибка создания документа.");
   }
 
-  // Передаем данные для замены в шаблон
+  // Заполняем шаблон данными
   try {
     doc.setData({
       contract_number: data.contract_number,

@@ -23,7 +23,7 @@ keys = [
 
 formButton.addEventListener("click", function (e) {
   e.preventDefault();
-  values = []; // Очищаем массив перед каждым запросом
+  values = []; // Очищаем массив значений перед сбором данных
   const inputs = document.querySelectorAll(".form__conteiner-input");
 
   for (let i = 0; i < inputs.length; i++) {
@@ -35,19 +35,10 @@ formButton.addEventListener("click", function (e) {
     initials[1][0] + "." + initials[2][0] + "." + initials[0];
   values.push(parent_initials);
 
-  let change_date = values[1].split("-");
-  change_date = change_date[2] + "." + change_date[1] + "." + change_date[0];
-  values[1] = change_date;
-
-  let change_date2 = values[8].split("-");
-  change_date2 =
-    change_date2[2] + "." + change_date2[1] + "." + change_date2[0];
-  values[8] = change_date2;
-
-  let change_date3 = values[14].split("-");
-  change_date3 =
-    change_date3[2] + "." + change_date3[1] + "." + change_date3[0];
-  values[14] = change_date3;
+  // Форматируем даты в нужный формат
+  values[1] = formatDate(values[1]);
+  values[8] = formatDate(values[8]);
+  values[14] = formatDate(values[14]);
 
   const dict_values = keys.reduce((acc, key, index) => {
     acc[key] = values[index];
@@ -57,7 +48,7 @@ formButton.addEventListener("click", function (e) {
   const jsonData = JSON.stringify(dict_values);
 
   // Отправляем данные на сервер
-  fetch("/api/send-data", {
+  fetch("https://tools.navyk.school/api/send-data", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -68,13 +59,13 @@ formButton.addEventListener("click", function (e) {
       if (!response.ok) {
         throw new Error("Ошибка при загрузке файла");
       }
-      return response.blob(); // Получаем blob из ответа
+      return response.blob();
     })
     .then((blob) => {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "modified_contract.docx"; // Имя файла при скачивании
+      a.download = "modified_contract.docx";
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -83,3 +74,8 @@ formButton.addEventListener("click", function (e) {
       console.error("Ошибка:", error);
     });
 });
+
+function formatDate(dateStr) {
+  const parts = dateStr.split("-");
+  return `${parts[2]}.${parts[1]}.${parts[0]}`;
+}
