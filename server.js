@@ -59,6 +59,8 @@ app.post("/api/send-data", (req, res) => {
     parent_initials: data.parent_initials,
   });
 
+  console.log(data);
+
   try {
     doc.render();
   } catch (error) {
