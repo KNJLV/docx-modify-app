@@ -62,9 +62,10 @@ app.post("/api/send-data", (req, res) => {
     return res.status(500).send("Ошибка при заполнении документа.");
   }
 
+  const outputPath = path.resolve(__dirname, "output.docx");
+
   try {
     const buf = doc.getZip().generate({ type: "nodebuffer" });
-    const outputPath = path.resolve(__dirname, "output.docx");
     fs.writeFileSync(outputPath, buf);
     console.log("Файл успешно записан по пути:", outputPath);
   } catch (error) {
@@ -77,8 +78,4 @@ app.post("/api/send-data", (req, res) => {
     'attachment; filename="modified_contract.docx"'
   );
   res.download(outputPath, "modified_contract.docx");
-});
-
-app.listen(8000, () => {
-  console.log("Server started on: http://localhost:8000");
 });
