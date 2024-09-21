@@ -8,7 +8,6 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(express.static(__dirname));
 
 // Главная страница
@@ -19,7 +18,7 @@ app.get("/", (req, res) => {
 // Обработка данных формы
 app.post("/api/send-data", (req, res) => {
   const data = req.body;
-  console.log("Полученные данные:", data);
+  console.log("Полученные данные:", JSON.stringify(data, null, 2)); // Логируем данные
 
   const templatePath = path.resolve(__dirname, "Contract.docx");
 
@@ -79,27 +78,26 @@ app.post("/api/send-data", (req, res) => {
 
   const outputPath = path.resolve(__dirname, "output.docx");
 
-  try {
-    console.log("Длина буфера для записи:", buf.length); // Логируем длину буфера
-    fs.writeFileSync(outputPath, buf);
-  } catch (error) {
-    console.error("Ошибка записи файла:", error);
-    console.error(error.stack); // Логируем стек ошибок для большей информации
-    return res.status(500).send("Ошибка при записи файла.");
-  }
-
-  // Проверяем наличие файла перед отправкой
-  fs.access(outputPath, fs.constants.F_OK, (err) => {
-    if (err) {
-      console.error("Файл не найден для загрузки:", err);
-      return res.status(500).send("Файл для загрузки не найден.");
+  // Асинхронная запись файла
+  fs.writeFile(outputPath, buf, (error) => {
+    if (error) {
+      console.error("Ошибка записи файла:", error);
+      return res.status(500).send("Ошибка при записи файла.");
     }
 
-    res.setHeader(
-      "Content-Disposition",
-      'attachment; filename="modified_contract.docx"'
-    );
-    res.download(outputPath, "modified_contract.docx");
+    // Проверяем наличие файла перед отправкой
+    fs.access(outputPath, fs.constants.F_OK, (err) => {
+      if (err) {
+        console.error("Файл не найден для загрузки:", err);
+        return res.status(500).send("Файл для загрузки не найден.");
+      }
+
+      res.setHeader(
+        "Content-Disposition",
+        'attachment; filename="modified_contract.docx"'
+      );
+      res.download(outputPath, "modified_contract.docx");
+    });
   });
 });
 
