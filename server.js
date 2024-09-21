@@ -80,9 +80,11 @@ app.post("/api/send-data", (req, res) => {
   const outputPath = path.resolve(__dirname, "output.docx");
 
   try {
+    console.log("Длина буфера для записи:", buf.length); // Логируем длину буфера
     fs.writeFileSync(outputPath, buf);
   } catch (error) {
     console.error("Ошибка записи файла:", error);
+    console.error(error.stack); // Логируем стек ошибок для большей информации
     return res.status(500).send("Ошибка при записи файла.");
   }
 
