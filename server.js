@@ -53,10 +53,15 @@ app.post("/api/send-data", (req, res) => {
     return res.status(500).send("Ошибка при заполнении документа.");
   }
 
-  const buf = doc.getZip().generate({ type: "nodebuffer" });
-
-  const outputPath = path.resolve(__dirname, "output.docx");
-  fs.writeFileSync(outputPath, buf);
+  try {
+    const buf = doc.getZip().generate({ type: "nodebuffer" });
+    const outputPath = path.resolve(__dirname, "output.docx");
+    fs.writeFileSync(outputPath, buf);
+    console.log("Файл успешно записан по пути:", outputPath);
+  } catch (error) {
+    console.error("Ошибка при записи файла:", error.message);
+    return res.status(500).send("Ошибка при записи файла.");
+  }
 
   res.setHeader(
     "Content-Disposition",
