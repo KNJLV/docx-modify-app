@@ -84,4 +84,5 @@ formButton.addEventListener("click", function (e) {
   for (let i = 0; i < inputs.length; i++) {
     inputs[i].value = "";
   }
+  document.location.reload();
 });
