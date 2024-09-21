@@ -1,32 +1,13 @@
-let formButton = document.querySelector(".form__button");
-let values = [];
-keys = [
-  "contract_number",
-  "contract_date",
-  "parent_name",
-  "parent_phone",
-  "parent_email",
-  "registration_address",
-  "passport_series",
-  "passport_number",
-  "passport_issue_date",
-  "passport_place_of_issue",
-  "children_name",
-  "subject_name",
-  "rate_name",
-  "course_name",
-  "course_start_date",
-  "course_duration",
-  "course_price",
-  "parent_initials",
-];
-
 formButton.addEventListener("click", function (e) {
   e.preventDefault();
-  values = []; // Очищаем массив значений перед сбором данных
+  values = [];
   const inputs = document.querySelectorAll(".form__conteiner-input");
 
   for (let i = 0; i < inputs.length; i++) {
+    if (!inputs[i].value) {
+      console.error(`Поле ${inputs[i].name} не заполнено!`);
+      return; // Прекращаем выполнение, если какое-либо поле не заполнено
+    }
     values.push(inputs[i].value);
   }
 
@@ -35,20 +16,20 @@ formButton.addEventListener("click", function (e) {
     initials[1][0] + "." + initials[2][0] + "." + initials[0];
   values.push(parent_initials);
 
-  // Форматируем даты в нужный формат
-  values[1] = formatDate(values[1]);
-  values[8] = formatDate(values[8]);
-  values[14] = formatDate(values[14]);
+  // Форматируем даты
+  values[1] = formatDate(values[1]); // contract_date
+  values[8] = formatDate(values[8]); // passport_issue_date
+  values[14] = formatDate(values[14]); // course_start_date
 
   const dict_values = keys.reduce((acc, key, index) => {
-    acc[key] = values[index];
+    acc[key] = values[index] || ""; // Добавляем пустую строку, если значение отсутствует
     return acc;
   }, {});
 
   const jsonData = JSON.stringify(dict_values);
 
-  // Отправляем данные на сервер
-  fetch("/api/send-data", {
+  // Отправка данных
+  fetch("https://tools.navyk.school/api/send-data", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -74,8 +55,3 @@ formButton.addEventListener("click", function (e) {
       console.error("Ошибка:", error);
     });
 });
-
-function formatDate(dateStr) {
-  const parts = dateStr.split("-");
-  return `${parts[2]}.${parts[1]}.${parts[0]}`;
-}
