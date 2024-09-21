@@ -79,3 +79,7 @@ app.post("/api/send-data", (req, res) => {
   );
   res.download(outputPath, "modified_contract.docx");
 });
+
+app.listen(8000, () => {
+  console.log("Server started on: http://localhost:8000");
+});
